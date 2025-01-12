@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React para iniciantes</title>
+
+  <!-- Carrega o React, React Dom e Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+
+<body>
+  <div id="root">
+    <!-- Precisa indicar para o Babel que ele deve transpilar o código -->
+    <script type="text/babel">
+
+      // Componentes
+      // Permitem você dividir a sua interface em pequenos elementos.São criados através de funções que retornam elementos React
+      const Button = () => {
+        return <button>Comprar</button>;
+      };
+
+      // Composição
+      // O principal motivo de criarmos componentes é para podermos compor a interface com diversos componentes que podem ser reutilizados
+      const MainNav = () => {
+        return (
+          <nav>
+            <ul>
+              <li><a href="#"> Link 1</a></li>
+              <li><a href="#"> Link 2</a></li>
+            </ul>
+          </nav>
+        );
+      };
+
+      // JavaScript {}
+      // Utilizamos as {} para executar expressões de JavaScript e mostrar o resultado no DOM
+      const Produtos = () => {
+        const produto1 = "Camisa"
+        const produto2 = "Bermuda"
+
+        return (
+          <div>
+            <button>{produto1} - R$ {Math.random() * 100}</button>
+            <button>{produto2} - R$ {Math.random() * 100}</button>
+          </div>
+        );
+      };
+
+      // Eventos
+      // Podemos atribuir eventos diretamente aos elementos
+      const Itens = () => {
+        function handleClick(event) {
+          console.log('Comprou: ' + event.target.innerText);
+        }
+
+        return (
+          <div>
+            <button onClick={handleClick}>Camisa</button>
+            <button onClick={handleClick}>Bermuda</button>
+          </div>
+        );
+      };
+
+      // Hooks
+      // Utilizamos o React pela facilidade de sincronização do estado. Os Hooks são funções especiais de React, o useState possibilita a sincronização do estado
+      const Compras = () => {
+        // useState é um Hook que define uma variável reativa
+        const [count, setCount] = React.useState(0);
+
+        return (
+          <div>
+            <button onClick={() => setCount(count + 1)}>Comprar: {count}</button>
+            <p>Total: {count}</p>
+            <p>Preço: R$ {count * 250}</p>
+          </div>
+        );
+      };
+
+
+
+      const App = () => {
+        return <div>
+          <h1>Teste</h1>
+          <MainNav />
+          <Produtos />
+          <Itens />
+          <Compras />
+        </div>
+      };
+
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+
+    </script>
+  </div>
+</body>
+
+</html>
